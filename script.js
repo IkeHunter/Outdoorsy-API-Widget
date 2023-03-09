@@ -1,6 +1,10 @@
+const $ = jQuery;
 class RentalRvWidget {
+    // NJf9xswrQk
+    // loader = '<lottie-player class="lottie-loader" src="https://lottie.host/4d7287f5-c241-475c-91fe-f60cd4dab37c/vCnM5ZgXw2.json"  background="transparent" speed="1"  style="width: 300px; height: 300px;"  loop autoplay></lottie-player>';
+    loader = '<lottie-player class="lottie-loader" src="Assets/NJf9xswrQk.json"  background="transparent" speed="1"  style="width: 150px; height: 150px;"  loop autoplay></lottie-player>';
     settings = {
-        "url": "https://search.outdoorsy.co/rentals?near=29.651634,-82.324829",
+        "url": `https://search.outdoorsy.co/rentals?near=${this.longitude},${this.latitude}`,
         "method": "GET",
         "timeout": 0,
         "headers": {
@@ -8,20 +12,31 @@ class RentalRvWidget {
           "Cookie": "__cf_bm=M152tN47hIcRCPfgnaGmHrpgP96iMYeqvk8aI5CHl58-1677856447-0-Ade7TFzsScwLGkksvl1F1faQI66yDJpf3YC3Yegs35Hr4QcC7CusJVXC+/j1Z7TDQyh9vX9HoRhQC74stPeAMZE="
         },
     };
-    
-    constructor(long, lat) {
-        this.longitude = long;
-        this.latitude = lat;
+
+    /** Initializer Methods **/
+    constructor(id="#outdoorsy-api") {
+        this.container_id = id;
     }
 
     initializeData() {
+        $(this.container_id).append(this.loader);
+
         return new Promise(resolve => {
-            $.ajax(this.settings).done(function (response) {
-                resolve(response["data"]);
-            });
+            new Promise(res => {
+                navigator.geolocation.getCurrentPosition(res, this.errorHandler);
+            })
+            .then(() => {
+                $.ajax(this.settings).done(function (response) {
+                    
+                    resolve(response["data"]);
+                });
+            })
+
         })
+
     }
 
+    /** Dynamic Card Methods **/
     createCard(data) {  // takes in response[data][i]
         const attributes = data.attributes; // response["data"][i]["attributes"]
         let card = `
@@ -42,18 +57,42 @@ class RentalRvWidget {
     displayGrid() {
         $('document').ready(async () => {
             const data = await this.initializeData();
+            $(this.container_id).children('.lottie-loader').hide();
             for(let i=0; i < 4; i++) {
                 let card = this.createCard(data[i]);
-                $('#dynamic-row').append(card);
+                $(this.container_id).append(card);
             }
         })
 
     }
+
+    /** Location Methods **/
+    errorHandler(err) {
+        $(this.container_id).children('.lottie-loader').hide();
+        let errorText = "Location Error";
+        if(err.code == 1) {
+            // alert("Error: Access is denied!");
+            errorText = "Location access denied.";
+
+        }else if( err.code == 2) {
+            // alert("Error: Position is unavailable!");
+            errorText = "Position is unavailable";
+        }
+        const errorMsg = `<strong class="location-error">${errorText}</strong>`;
+        $(this.container_id).append(errorMsg);
+    }
+    
 }
 
+$(document).ready(() => {
+    elements = $('#outdoorsy-api');
+    if(elements.length > 0) {
+        widget = new RentalRvWidget();
+        widget.displayGrid();
+    }
+});
 
-widget = new RentalRvWidget(0, 0);
-widget.displayGrid();
+
 
 
 

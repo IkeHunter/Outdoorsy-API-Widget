@@ -110,7 +110,8 @@ h4 {
 }
 p,
 span,
-div {
+div, 
+strong {
     color: var( --e-global-color-text );
     font-family: var( --e-global-typography-text-font-family ), Sans-serif;
     font-size: var( --e-global-typography-text-font-size );
@@ -149,12 +150,13 @@ section.wrapper::after {
     width: 1261px;
     z-index: 2;
 }
-.container {
+.outdoorsy-container {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 20px;
     height: 100%;
     align-content: center;
+    position: relative;
 
 }
 a:link,
@@ -173,7 +175,7 @@ a:visited {
     transition: transform .3s;
     backface-visibility: hidden;
 /*     transform: translateZ(0); */
-    font-smoothing: antialiased !important;
+    /* font-smoothing: antialiased !important; */
 }
 .card:hover {
     transform: scale(1.03) translateZ(0);
@@ -219,4 +221,16 @@ a:visited {
     font-size: 18px;
     font-weight: 300;
     margin-left: 8px;
+}
+
+.lottie-loader,.location-error {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.location-error {
+    text-align: center;
+    color: var(--e-global-color-cf53f63);
+    width: 100%;
 }
