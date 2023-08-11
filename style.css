@@ -1,155 +1,4 @@
-:root {
-    --e-global-color-primary: #232C37;
-    --e-global-color-secondary: #E07102;
-    --e-global-color-accent: #F0C029;
-    --e-global-color-text: #2D2D2D;
-    --e-global-color-8004078: #0A75B6;
-    --e-global-color-cf53f63: #FFFFFF;
-    --e-global-color-19d4b596: #226794;
-    --e-global-color-504c9f71: #1DA162;
-    --e-global-color-1ab5e202: #7A7A7A;
-    --e-global-color-468f7b3c: #E7932A;
-    --e-global-color-d49ac81: #F0C029;
-    --e-global-color-332724a: #15181B;
-    --e-global-color-4d462f5: #D2D2D2;
-    --e-global-color-cfa1f76: #F8F8F8;
-    --e-global-color-434ec98: #4B4F53;
-    --e-global-color-044b931: #15181B;
-    --e-global-color-7992f47: #010507;
-    --e-global-color-c79eab0: #232C37;
-    --e-global-color-29707d4: #E9F3F9;
-    --e-global-color-15b6e3d: #E0710285;
-    --e-global-typography-primary-font-family: "Montserrat";
-    --e-global-typography-primary-font-size: 68px;
-    --e-global-typography-primary-font-weight: 700;
-    --e-global-typography-primary-line-height: 1em;
-    --e-global-typography-primary-letter-spacing: -2px;
-    --e-global-typography-accent-font-family: "Roboto";
-    --e-global-typography-accent-font-weight: 500;
-    --e-global-typography-secondary-font-family: "Montserrat";
-    --e-global-typography-secondary-font-size: 48px;
-    --e-global-typography-secondary-font-weight: 700;
-    --e-global-typography-secondary-line-height: 1.1em;
-    --e-global-typography-text-font-family: "Roboto";
-    --e-global-typography-text-font-size: 14px;
-    --e-global-typography-text-font-weight: 400;
-    --e-global-typography-text-line-height: 1em;
-    --e-global-typography-b2ce6af-font-family: "Roboto";
-    --e-global-typography-b2ce6af-font-size: 16px;
-    --e-global-typography-b2ce6af-line-height: 1.5em;
-    --e-global-typography-69c152f-font-family: "Roboto";
-    --e-global-typography-69c152f-font-size: 14px;
-    --e-global-typography-69c152f-line-height: 1.6em;
-    --e-global-typography-520c191-font-family: "Roboto";
-    --e-global-typography-520c191-font-size: 15px;
-    --e-global-typography-520c191-font-weight: 500;
-    --e-global-typography-583e54c-font-family: "Inter";
-    --e-global-typography-583e54c-font-size: 72px;
-    --e-global-typography-583e54c-font-weight: 700;
-    --e-global-typography-583e54c-line-height: 1em;
-    --e-global-typography-583e54c-letter-spacing: -2px;
-    --e-global-typography-5d167aa-font-family: "Inter";
-    --e-global-typography-5d167aa-font-size: 42px;
-    --e-global-typography-5d167aa-font-weight: 700;
-    --e-global-typography-5d167aa-line-height: 1.1em;
-    --e-global-typography-d3dae9a-font-family: "Montserrat";
-    --e-global-typography-d3dae9a-font-size: 29px;
-    --e-global-typography-d3dae9a-font-weight: 700;
-    --e-global-typography-d3dae9a-line-height: 1.2em;
-    --e-global-typography-83682a1-font-family: "Montserrat";
-    --e-global-typography-83682a1-font-size: 22px;
-    --e-global-typography-83682a1-font-weight: 700;
-    --e-global-typography-83682a1-line-height: 1.3em;
-    --e-global-typography-7044a64-font-family: "Montserrat";
-    --e-global-typography-7044a64-font-size: 18px;
-    --e-global-typography-7044a64-font-weight: 700;
-    --e-global-typography-7044a64-line-height: 1.4em;
-    --e-global-typography-84ca66e-font-family: "Montserrat";
-    --e-global-typography-84ca66e-font-size: 18px;
-    --e-global-typography-84ca66e-font-weight: 400;
-    --e-global-typography-84ca66e-line-height: 1.5em;
-    --e-global-typography-112b6c4-font-family: "Heebo";
-    --e-global-typography-112b6c4-font-size: 13px;
-    --e-global-typography-112b6c4-font-weight: 400;
-    --e-global-typography-a435f28-font-family: "Montserrat";
-    --e-global-typography-a435f28-font-size: 200px;
-    --e-global-typography-a435f28-font-weight: 600;
-    --e-global-typography-a435f28-text-transform: capitalize;
-    --e-global-typography-a435f28-letter-spacing: -2px;
-    --e-global-typography-7bdb787-font-family: "Roboto";
-    --e-global-typography-7bdb787-font-size: 16px;
-    --e-global-typography-7bdb787-text-decoration: underline;
-    color: var( --e-global-color-text );
-    font-family: var( --e-global-typography-text-font-family ),Sans-serif;
-    font-weight: var( --e-global-typography-text-font-weight );
-}
-body {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-body * {
-    box-sizing: border-box;
-}
-h3 {
-    color: var( --e-global-color-text );
-    font-family: var( --e-global-typography-d3dae9a-font-family ), Sans-serif;
-    font-size: var( --e-global-typography-d3dae9a-font-size );
-    font-weight: var( --e-global-typography-d3dae9a-font-weight );
-    line-height: var( --e-global-typography-d3dae9a-line-height );
-    letter-spacing: var( --e-global-typography-d3dae9a-letter-spacing );
-    word-spacing: var( --e-global-typography-d3dae9a-word-spacing );
-} 
-h4 {
-    color: var( --e-global-color-text );
-    font-family: var( --e-global-typography-83682a1-font-family ), Sans-serif;
-    font-size: 18px;
-    font-weight: var( --e-global-typography-83682a1-font-weight );
-    line-height: 22px;
-    letter-spacing: var( --e-global-typography-83682a1-letter-spacing );
-}
-p,
-span,
-div, 
-strong {
-    color: var( --e-global-color-text );
-    font-family: var( --e-global-typography-text-font-family ), Sans-serif;
-    font-size: var( --e-global-typography-text-font-size );
-    font-weight: var( --e-global-typography-text-font-weight );
-    line-height: var( --e-global-typography-text-line-height );
-    letter-spacing: var( --e-global-typography-text-letter-spacing );
-    word-spacing: var( --e-global-typography-text-word-spacing );
-}
 
-section.wrapper {
-    width: 100%;
-    min-height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-image: url("/assets/farzn-dehbashi-wIBBYw81XOw-unsplash.jpg");
-    background-size: cover;
-    background-position: center;
-    z-index: 0;
-    
-}
-section.wrapper::after {
-    content: "";
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    background-color: rgba(35, 44, 55, 0.47);
-    background-blend-mode: multiply;
-    mix-blend-mode: multiply;
-    backdrop-filter: blur(4.5px);
-    z-index: 1;
-}
-.container-fluid {
-    position: relative;
-    height: 100%;
-    width: 1261px;
-    z-index: 2;
-}
 .outdoorsy-container {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -162,12 +11,12 @@ section.wrapper::after {
 a:link,
 a:visited {
     text-decoration: none;
-    
+
 }
 .card {
     background-color: #f9f9f9;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.34);
-    min-height: 400px;
+    min-height: 450px;
     display: grid;
     grid-template-rows: repeat(2, 1fr);
     border-radius: 15px;
@@ -179,15 +28,15 @@ a:visited {
 }
 .card:hover {
     transform: scale(1.03) translateZ(0);
-    
+
 }
 
 .card img {
     width: 100%;
     /* max-height: 200px; */
-    height: 50%;
+    height: 225px;
     object-fit: cover;
-    
+
 }
 .card .content {
     padding: 25px 15px;
@@ -199,12 +48,14 @@ a:visited {
 .card .content h4 {
     margin: 0;
     color: var(--e-global-color-primary);
+	    line-height: 1em;
 }
 .card .content .description {
     display: flex;
     font-weight: 300;
     line-height: 18px;
     align-items: center;
+    font-size: 16px;
 }
 .card .content i {
     font-size: inherit;

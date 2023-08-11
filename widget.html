@@ -1,0 +1,211 @@
+<style>
+    .outdoorsy-container {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        min-height: 400px;
+        align-content: center;
+        position: relative;
+    }
+    a:link,
+    a:visited {
+        text-decoration: none;
+    }
+    .card {
+        background-color: #f9f9f9;
+        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.34);
+        min-height: 450px;
+        display: grid;
+        grid-template-rows: repeat(2, 1fr);
+        border-radius: 15px;
+        overflow: hidden;
+        transition: transform 0.3s;
+        backface-visibility: hidden;
+        /*     transform: translateZ(0); */
+        /* font-smoothing: antialiased !important; */
+    }
+    .card:hover {
+        transform: scale(1.03) translateZ(0);
+    }
+
+    .card img {
+        width: 100%;
+        /* max-height: 200px; */
+        height: 225px;
+        object-fit: cover;
+    }
+    .card .content {
+        padding: 25px 15px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    .card .content h4 {
+        margin: 0;
+        color: var(--e-global-color-primary);
+        line-height: 1em;
+    }
+    .card .content .description {
+        display: flex;
+        font-weight: 300;
+        line-height: 18px;
+        align-items: center;
+        font-size: 16px;
+    }
+    .card .content i {
+        font-size: inherit;
+        color: #e5b01f;
+    }
+    .card .content .price {
+        color: var(--e-global-color-primary);
+    }
+    .card .content .price strong {
+        font-weight: 600;
+        font-size: 30px;
+    }
+    .card .content .price span {
+        font-size: 18px;
+        font-weight: 300;
+        margin-left: 8px;
+    }
+
+    .lottie-loader,
+    .location-error {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    .location-error {
+        text-align: center;
+        color: var(--e-global-color-cf53f63);
+        width: 100%;
+    }
+
+    @media screen and (max-width: 1024px) {
+        .outdoorsy-container {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media screen and (max-width: 767px) {
+        .outdoorsy-container {
+            grid-template-columns: repeat(1, 1fr);
+        }
+    }
+</style>
+<section class="wrapper">
+    <div class="container-fluid">
+        <div class="outdoorsy-container" id="outdoorsy-api" display-type="single-row"></div>
+    </div>
+</section>
+<script>
+    const $ = jQuery;
+    class RentalRvWidget {
+        loader =
+            '<lottie-player class="lottie-loader" src="Assets/NJf9xswrQk.json"  background="transparent" speed="1"  style="width: 150px; height: 150px;"  loop autoplay></lottie-player>';
+
+        /** Initializer Methods **/
+        constructor(id = "#outdoorsy-api") {
+            this.container_id = id;
+        }
+
+        async initializeData() {
+            $(this.container_id).append(this.loader);
+            let baseUrl = "https://search.outdoorsy.co/rentals";
+            let locationParameter = "";
+            let fetchUrl = "";
+            let getLocation = new Promise((resolve) => {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition((position) => {
+                        locationParameter = `?near=${position.coords.longitude},${position.coords.latitude}`;
+                    }, this.errorHandler);
+                }
+                resolve(locationParameter);
+            });
+            console.log("Fetching location");
+            locationParameter = await getLocation;
+            console.log("location parameter = " + locationParameter);
+
+            const fetchURL = `${baseUrl}${locationParameter}`;
+            console.log("Attempting to fetch " + fetchURL);
+
+            let getRentals = fetch(fetchURL);
+            let rentals = await getRentals;
+            const response = await fetch(fetchURL);
+            return await response.json();
+        }
+
+        /** Dynamic Card Methods **/
+        // takes in response[data][i]
+        createCard(data) {
+            const attributes = data.attributes; // response["data"][i]["attributes"]
+            let card = `
+        <a href="https://outdoorsy.com${attributes["slug"]}" class="card" target="_blank">
+            <img width="100%" height="225px" src="${attributes["primary_image_url"]}" alt="${
+                attributes["vehicle_title"]
+            }" >
+            <div class="content">
+                <h4>${attributes["vehicle_title"]}, ${attributes["vehicle_make"]}</h4>
+                <div>
+                    <span class="description">${attributes["vehicle_year"]} ${
+                attributes["display_vehicle_type"]
+            } • ${attributes["vehicle_length"]} ft</span><span class="description">${
+                attributes["location"]["city"]
+            }, ${
+                attributes["location"]["state"]
+            }</span><span class="description"><i class="material-icons">star</i>${attributes[
+                "score"
+            ].toFixed(1)} • ${attributes["reviews_num"]} Reviews • Sleeps ${
+                attributes["sleeps"]
+            }</span>
+                </div>
+
+                <div class="price"><strong>$${
+                    attributes["price_per_day"] / 100
+                }</strong><span>/day</span></div>
+            </div>
+        </a>
+        `;
+            return card;
+        }
+
+        displayGrid() {
+            $("document").ready(async () => {
+                console.log("in displayGrid - before initializeData()");
+                const fetchedData = await this.initializeData();
+                console.log("back from init data!");
+                const cardData = fetchedData.data;
+                console.log(cardData);
+                $(".lottie-loader").hide();
+                for (let i = 0; i < 4; i++) {
+                    let card = this.createCard(cardData[i]);
+                    $(this.container_id).append(card);
+                }
+            });
+        }
+
+        /** Location Methods **/
+        errorHandler(err) {
+            $(this.container_id).children(".lottie-loader").hide();
+            let errorText = "Location Error";
+            if (err.code == 1) {
+                // alert("Error: Access is denied!");
+                errorText = "Location access denied.";
+            } else if (err.code == 2) {
+                // alert("Error: Position is unavailable!");
+                errorText = "Position is unavailable";
+            }
+            const errorMsg = `<strong class="location-error">${errorText}</strong>`;
+            $(this.container_id).append(errorMsg);
+        }
+    }
+
+    $(document).ready(() => {
+        elements = $("#outdoorsy-api");
+        if (elements.length > 0) {
+            widget = new RentalRvWidget();
+            widget.displayGrid();
+        }
+    });
+</script>
